@@ -1,5 +1,5 @@
 // MASH Simulation
-// http://www.holmea.demon.co.uk/Frac2/Mash.htm
+// http://www.aholme.co.uk/Frac2/Mash.htm
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,20 +17,22 @@
 #define max(x,y) (((x)>(y))?(x):(y))
 #define min(x,y) (((x)<(y))?(x):(y))
 
+#ifndef CONFIG /* defines passed externally */
 #define ORDER 3 /* 2 or 3 */
 #define TWOCH false /* include reference signal for comparison */
 #define BINARY true /* binary weighted output; mutually-exclusive with TWOCH */
 #define NPLICATE false /* single bitstream output, mutually-exclusive with BINARY */
 #define COUNT 1e6 /* number of samples to generate */
+#endif
 
 /* input function, 32-bit unsigned */
-#define FUNC(i) ((uint32_t) ((sin(i*2*M_PI/100.)+1.)*(2147483647)))
+#define FUNC(i) ((uint32_t) ((sin(i*2*M_PI/100.)+1.)*(2147483647))) /* sine */
+//#define FUNC(i) ((uint32_t) ((((uint32_t)(i/5000.))&1)?0x0:0x7fffffff)) /* square */
+//#define FUNC(i) ((uint32_t) 1e9) /* constant DC */
 
 uint64_t freq[8] = {0};
 
 #define MODULO (1<<24)
-//#define FUNC(i) ((uint32_t) ((((uint32_t)(i/5000.))&1)?0x0:0x7fffffff))
-//#define FUNC(i) ((uint32_t) 1e9)
 struct mash {
     int q[4];       // Latch outputs
     int c[4][4];    // Carry flip flops
