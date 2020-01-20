@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use Math::Random::OO::Normal;
-my $r=Math::Random::OO::Normal->new(1,0);  # mean 1, stdev 1
+my $r=Math::Random::OO::Normal->new(1,0.02);  # mean, stdev
 
 sub line {
     my ($t,$b)=@_;
@@ -13,7 +13,7 @@ $rise=100e-12; # 100ps
 #$vmax=1.375;
 $vmin=0;
 $vmax=3.3;
-$t=0;
+$t=0; $tt=0;
 $/=\1;
 $that=0;
 $count=100000;
@@ -22,10 +22,11 @@ $inverted=shift;
 while ($q=<>) {
     $this=!!unpack"C",$q;
     if ($this!=$that) {
-	line($t+$rise*$r->next, $this);
+	line($tt+$rise, $this);
     }
+    $tt=$t+$period*$r->next; # jittered
     $t+=$period;
-    line($t*$r->next, $this);
+    line($tt, $this);
     $that=$this;
     exit if !--$count;
 }

@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
 			//out = (mash_clock(&m, in>>8)+3)*(0x24924924);
 			if (!dec) {
 				q = 1;//rand()%3;
-				out = (mash_clock(&m, in>>8)+3);
+				out = (mash_clock(&m, in>>8)+(1<<(ORDER-1))-1);
 				freq[out]++;
 			}
 #if TWOCH
