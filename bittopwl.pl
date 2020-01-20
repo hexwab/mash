@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use Math::Random::OO::Normal;
-my $r=Math::Random::OO::Normal->new(1,1);  # mean 1, stdev 1
+my $r=Math::Random::OO::Normal->new(1,0);  # mean 1, stdev 1
 
 sub line {
     my ($t,$b)=@_;
